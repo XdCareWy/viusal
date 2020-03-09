@@ -1,3 +1,4 @@
+import { FONTSIZE } from "../tool/constants";
 class TextComponent {
   constructor(snap, basicParams, styleParams) {
     const { x, y, text } = basicParams,
@@ -6,7 +7,7 @@ class TextComponent {
     this.x = x;
     this.y = y;
     this.text = text || "";
-    this.fontSize = fontSize || "14px";
+    this.fontSize = fontSize || FONTSIZE;
     this.maxWidth = maxWidth || 50;
     this.restStyle = restStyle;
   }

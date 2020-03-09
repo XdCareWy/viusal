@@ -21,10 +21,10 @@ export const COLOR = {
   PAGE_2: "#87706B",
   PAGE_3: "#B3B435"
 };
-export const ELLIPSE_RX = 50;
-export const ELLIPSE_RY = 25;
-export const CIRCLE_R = 30;
-export const RECTANGLE_WIDTH = 100;
-export const RECTANGLE_HEIGHT = 50;
-export const SQUARE_WIDTH = 66;
+export const ELLIPSE_RX = 40;
+export const ELLIPSE_RY = 20;
+export const CIRCLE_R = 25;
+export const RECTANGLE_WIDTH = 80;
+export const RECTANGLE_HEIGHT = 40;
+export const SQUARE_WIDTH = 50;
 export const FONTSIZE = "12px";
