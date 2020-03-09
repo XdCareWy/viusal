@@ -1,33 +1,29 @@
 import React, { Component } from "react";
 import Snap from "snapsvg";
-import {
-  Circle,
-  Text,
-  Text1,
-  getTextNodeBox,
-  Ellipse,
-  Square,
-  Rectangle
-} from "./basicSvg";
+import Activity from "./business/Activity";
+import Page from "./business/Page";
+import Interface from "./business/Interface";
+import DB from "./business/DB";
+import ES from "./business/ES";
+import Cache from "./business/Cache";
+import MQ from "./business/MQ";
 
 class Visual extends Component {
   componentDidMount() {
     const snap = Snap("#svgId");
-    const c = Circle(snap, { x: 120, y: 250, r: 40 });
-    const { height } = getTextNodeBox(snap, "asdasdas", 12);
-    snap.text(0, height, "asdasdas");
 
-    console.log(Snap.sin(45) * 100);
-    Text1(snap, "活动1", {}, c);
-
-    const ellipse = Ellipse(snap, { x: 150, y: 100, rx: 100, ry: 50 });
-    const square = Square(snap, { x: 150, y: 300, width: 200, height: 100 });
-    const rectangle = Rectangle(snap, { x: 150, y: 450, width: 100 });
+    const activity = Activity(snap, 100, 50);
+    const page = Page(snap, 100, 110);
+    const inter = Interface(snap, 100, 190);
+    const db = DB(snap, 100, 270);
+    const es = ES(snap, 100, 360);
+    const cache = Cache(snap, 100, 440);
+    const mq = MQ(snap, 100, 520);
   }
 
   render() {
     return (
-      <div>
+      <div style={{ border: "1px solid red" }}>
         <svg id="svgId" width={700} height={700} />
       </div>
     );

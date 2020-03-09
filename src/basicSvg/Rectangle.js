@@ -1,5 +1,5 @@
 export function Rectangle(snap, basicParams, styleParams) {
-  const { x, y, width, rx = 0, ry = 0 } = basicParams || {};
+  const { x, y, width, height, rx = 0, ry = 0 } = basicParams || {};
   const {
     fill = "rgb(215,216,217)",
     stroke = "gray",
@@ -7,7 +7,7 @@ export function Rectangle(snap, basicParams, styleParams) {
     fillOpacity = "1",
     ...rest
   } = styleParams || {};
-  const rectangle = snap.rect(x, y, width, width, rx, ry);
+  const rectangle = snap.rect(x, y, width, height, rx, ry);
   const attrs = {
     fill,
     stroke,

@@ -19,7 +19,6 @@ function Circle(snap, basicParams, styleParams = {}) {
     ...rest
   };
   circle.attr(attrs);
-  console.log(typeof circle.getBBox)
   return circle;
 }
 Circle.prototype.type = "circle";
