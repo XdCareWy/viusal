@@ -1,7 +1,8 @@
 import { Rectangle, Text } from "../basicSvg";
+import { RECTANGLE_HEIGHT, RECTANGLE_WIDTH } from "../tool/constants";
 export default function Page(snap, x, y, text) {
-  const width = 100,
-    height = 50,
+  const width = RECTANGLE_WIDTH,
+    height = RECTANGLE_HEIGHT,
     offsetX = x - width / 2,
     offsetY = y - height / 2,
     basicParams = {

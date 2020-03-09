@@ -1,6 +1,7 @@
 import { Square, Text } from "../basicSvg";
+import { SQUARE_WIDTH } from "../tool/constants"
 export default function ES(snap, x, y, text) {
-  const width = 66,
+  const width = SQUARE_WIDTH,
     basicParams = {
       x: x - width / 2,
       y: y - width / 2,

@@ -1,6 +1,7 @@
 import { Circle, Text } from "../basicSvg";
+import { CIRCLE_R } from "../tool/constants";
 export default function MQ(snap, x, y, text) {
-  const r = 30,
+  const r = CIRCLE_R,
     style = {
       fill: MQ.color,
       strokeWidth: 0

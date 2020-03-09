@@ -1,12 +1,13 @@
 import { Ellipse, Text } from "../basicSvg";
+import { ELLIPSE_RX, ELLIPSE_RY } from "../tool/constants";
 
 export default function Activity(snap, x, y, text) {
   const style = {
       fill: Activity.color,
       strokeWidth: 0
     },
-    rx = 50,
-    ry = 25;
+    rx = ELLIPSE_RX,
+    ry = ELLIPSE_RY;
   const activity = Ellipse(snap, { x, y, rx, ry }, style);
   text = typeof text === "string" ? text.trim() : "";
   if (text) {
