@@ -1,4 +1,4 @@
-import { Rectangle } from "../basicSvg";
+import { Rectangle, Text } from "../basicSvg";
 export default function Page(snap, x, y, text) {
   const width = 100,
     height = 50,
@@ -15,5 +15,15 @@ export default function Page(snap, x, y, text) {
     strokeWidth: 0
   };
   const page = Rectangle(snap, basicParams, style);
+  text = typeof text === "string" ? text.trim() : "";
+  if (text) {
+    const t = Text(
+      snap,
+      { x: x, y: y, text: text },
+      { maxWidth: 2 * (width - 10) }
+    );
+    return snap.g(page, t);
+  }
+  return page;
 }
 Page.color = "#ED7D31";
