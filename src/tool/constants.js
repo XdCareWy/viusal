@@ -28,3 +28,12 @@ export const RECTANGLE_WIDTH = 80;
 export const RECTANGLE_HEIGHT = 40;
 export const SQUARE_WIDTH = 50;
 export const FONTSIZE = "12px";
+export const TYPES = {
+  active: 0,
+  cache: 1,
+  db: 2,
+  es: 3,
+  interfaceType: 4,
+  mq: 5,
+  page: 6
+};

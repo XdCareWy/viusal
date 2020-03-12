@@ -7,6 +7,8 @@ import DB from "./business/DB";
 import ES from "./business/ES";
 import Cache from "./business/Cache";
 import MQ from "./business/MQ";
+import mockData from "./mock";
+import { groupData } from "./tool";
 
 class Visual extends Component {
   componentDidMount() {
@@ -19,6 +21,12 @@ class Visual extends Component {
     const es = ES(snap, 100, 360, "es1");
     const cache = Cache(snap, 100, 440, "缓存1");
     const mq = MQ(snap, 100, 520, "mq1");
+    const root = mockData.find(i => i.parents.length === 0);
+    const child = root.children.reduce((acc, cur) => {
+      return acc.concat(cur.sid);
+    }, []);
+    const r = groupData(mockData);
+    console.log(r);
   }
 
   render() {
