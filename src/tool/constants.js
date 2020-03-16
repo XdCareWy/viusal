@@ -37,5 +37,5 @@ export const TYPES = {
   mq: 5,
   page: 6
 };
-export const ROW_SPACING = 150;
+export const ROW_SPACING = 160;
 export const COLUMN_SPACING = 140;

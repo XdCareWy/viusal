@@ -11,6 +11,7 @@ import mockData from "./mock";
 import { groupData } from "./tool";
 import { flat } from "./tool/utils";
 import { ROW_SPACING, COLUMN_SPACING, TYPES } from "./tool/constants";
+import { ArrowLine } from "./basicSvg";
 
 class Visual extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class Visual extends Component {
       height: svgHeight
     });
   }
-  paint = (snap, node) => {
+  paintGraph = (snap, node) => {
     const nodeMapFn = {
       [TYPES.active]: Activity,
       [TYPES.page]: Page,
@@ -42,7 +43,13 @@ class Visual extends Component {
       [TYPES.mq]: MQ
     };
     const fn = nodeMapFn[node.type];
-    fn(snap, node.x, node.y, node.pointName);
+    const graph = fn(snap, node.x, node.y, node.pointName);
+    const { cx, cy, width, height } = graph.getBBox();
+    const top = [cx, cy - height / 2];
+    const right = [cx + width / 2, cy];
+    const bottom = [cx, cy + height / 2];
+    const left = [cx - width / 2, cy];
+    return { top, right, bottom, left };
   };
   addCoordinate = (snap, data, svgWidth, svgHeight) => {
     let x = svgWidth / (data.length + 1);
@@ -55,10 +62,9 @@ class Visual extends Component {
         const currentY = y + COLUMN_SPACING * j;
         tmp.x = currentX;
         tmp.y = currentY;
-        this.paint(snap, tmp);
+        tmp.lineCoordinate = this.paintGraph(snap, tmp);
       }
     }
-    console.log(data);
     this.paintLine(snap, data);
   };
   paintLine = (snap, data) => {
@@ -73,13 +79,10 @@ class Visual extends Component {
   };
 
   lineArrow = (snap, parent, child) => {
-    console.log(parent);
-    console.log(child);
     if (parent.x && parent.y && child.x && child.y) {
-      snap.line(parent.x, parent.y, child.x, child.y).attr({
-        stroke: "gray",
-        strokeWidth: 2
-      });
+      const right = parent.lineCoordinate.right;
+      const left = child.lineCoordinate.left;
+      ArrowLine(snap, { x1: right[0], y1: right[1], x2: left[0], y2: left[1] });
     }
   };
 
