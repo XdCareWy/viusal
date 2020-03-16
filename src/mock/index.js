@@ -3,6 +3,7 @@ export default [
     parents: [],
     id: 1,
     pointName: "活动1",
+    type: 0,
     children: [
       {
         id: 1,
@@ -31,6 +32,7 @@ export default [
     ],
     id: 2,
     pointName: "页面1",
+    type: 6,
     children: [
       {
         id: 1,
@@ -54,6 +56,7 @@ export default [
     ],
     id: 3,
     pointName: "页面2",
+    type: 6,
     children: [
       {
         id: 1,
@@ -77,6 +80,7 @@ export default [
     ],
     id: 4,
     pointName: "页面3",
+    type: 6,
     children: [
       {
         id: 1,
@@ -105,6 +109,7 @@ export default [
     ],
     id: 5,
     pointName: "接口1",
+    type: 4,
     children: [
       {
         id: 1,
@@ -138,6 +143,7 @@ export default [
     ],
     id: 6,
     pointName: "接口2",
+    type: 4,
     children: [
       {
         id: 1,
@@ -161,6 +167,7 @@ export default [
     ],
     id: 7,
     pointName: "接口3",
+    type: 4,
     children: [
       {
         id: 1,
@@ -179,6 +186,7 @@ export default [
     ],
     id: 8,
     pointName: "缓存1",
+    type: 1,
     children: [
       {
         id: 1,
@@ -202,6 +210,7 @@ export default [
     ],
     id: 9,
     pointName: "缓存2",
+    type: 1,
     children: [
       {
         id: 1,
@@ -214,17 +223,18 @@ export default [
     parents: [
       {
         id: 1,
-        fid: 10,
-        sid: 8
+        fid: 8,
+        sid: 10
       },
       {
-        id: 1,
-        fid: 10,
-        sid: 9
+        id: 2,
+        fid: 9,
+        sid: 10
       }
     ],
     id: 10,
     pointName: "数据库1",
+    type: 2,
     children: []
   }
 ];

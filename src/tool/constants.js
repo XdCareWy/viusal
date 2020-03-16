@@ -23,7 +23,7 @@ export const COLOR = {
 };
 export const ELLIPSE_RX = 40;
 export const ELLIPSE_RY = 20;
-export const CIRCLE_R = 25;
+export const CIRCLE_R = 27;
 export const RECTANGLE_WIDTH = 80;
 export const RECTANGLE_HEIGHT = 40;
 export const SQUARE_WIDTH = 50;
@@ -37,3 +37,5 @@ export const TYPES = {
   mq: 5,
   page: 6
 };
+export const ROW_SPACING = 150;
+export const COLUMN_SPACING = 140;
