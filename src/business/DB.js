@@ -23,4 +23,4 @@ export default function DB(snap, x, y, text) {
   }
   return db;
 }
-DB.color = "#514949";
+DB.color = "#9CBEBD";

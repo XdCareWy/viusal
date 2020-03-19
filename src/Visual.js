@@ -83,25 +83,39 @@ class Visual extends Component {
       const ids = node.children.reduce((acc, cur) => acc.concat(cur.sid), []);
       const children = arr.filter(i => ids.includes(i.id));
       children.forEach(j => {
-        this.lineArrow(snap, node, j);
+        const relationObj = node.children.find(i => i.sid === j.id);
+        this.lineArrow(snap, node, j, relationObj);
       });
     });
   };
 
-  lineArrow = (snap, parent, child) => {
+  lineArrow = (snap, parent, child, relationObj) => {
     if (parent.x && parent.y && child.x && child.y) {
       const right = parent.lineCoordinate.right;
       const left = child.lineCoordinate.left;
-      console.log(parent)
-      console.log(child)
-      ArrowLine(snap, { x1: right[0], y1: right[1], x2: left[0], y2: left[1] });
+      const styleParams = {
+        strokeDasharray: 5
+      };
+
+      ArrowLine(
+        snap,
+        { x1: right[0], y1: right[1], x2: left[0], y2: left[1] },
+        +relationObj.relation === 0 ? {} : styleParams
+      );
     }
   };
 
   render() {
     const { width, height } = this.state;
     return (
-      <div style={{ border: "1px solid red" }}>
+      <div
+        style={{
+          border: "1px solid red",
+          width: "80%",
+          overflow: "auto",
+          margin: "0 auto"
+        }}
+      >
         <svg id="svgId" width={width} height={height} />
       </div>
     );

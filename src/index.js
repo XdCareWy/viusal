@@ -15,7 +15,6 @@ class Index extends Component {
     try {
       const { success, result } = await getData();
       if (success) {
-        console.log(result);
         this.setState({
           data: result.nodes
         });
@@ -27,8 +26,7 @@ class Index extends Component {
 
   render() {
     const { data } = this.state;
-    console.log(data);
-    return <div>{data.length && <Visual value={data} />}</div>;
+    return <div>{!!data.length ? <Visual value={data} /> : "数据为空"}</div>;
   }
 }
 
