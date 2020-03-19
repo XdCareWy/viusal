@@ -22,14 +22,13 @@
  * @param sourceData
  * @returns {*}
  */
+import { TYPES } from "./constants";
+
 export function groupData(sourceData) {
   // 将接口返回的数据转换成我需要的数据
   sourceData = transformData(sourceData);
   let result;
-  const rootNode = getRootNode(sourceData);
-  const rootChildren = rootNode.children.reduce((acc, cur) => {
-    return acc.concat(cur.sid);
-  }, []);
+
   function loop(data, childrenIds, res) {
     //  1. 根据childrenIds找到所有的children
     const children = data.filter(i => childrenIds.includes(i.id));
@@ -50,7 +49,19 @@ export function groupData(sourceData) {
     }
     return res;
   }
-  result = loop(sourceData, rootChildren, [[rootNode]]);
+  // 1. 找到所有的根节点
+  const rootNode = getRootNode(sourceData);
+  // 2. 计算所有根节点的子节点id
+  const rootChildren = rootNode.reduce((acc, cur) => {
+    return acc.concat(
+      cur.children.reduce((a, c) => {
+        return a.concat(c.sid);
+      }, [])
+    );
+  }, []);
+  // 3. 递归调用分组
+  result = loop(sourceData, [...new Set(rootChildren)], [rootNode]);
+  // 4. 去除重复节点，保留最远节点
   result = filterMiddleNode(result);
   const maxWidth = result.length;
   const maxHeight = Math.max(
@@ -69,7 +80,9 @@ export function groupData(sourceData) {
  * @returns {Node}
  */
 function getRootNode(sourceData) {
-  return sourceData.find(i => i.parents.length === 0);
+  return sourceData.filter(
+    i => i.parents.length === 0 && i.serviceType === TYPES.active
+  );
 }
 
 function filterMiddleNode(nodes) {

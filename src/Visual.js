@@ -33,7 +33,8 @@ class Visual extends Component {
       height: svgHeight
     });
   }
-  paintGraph = (snap, node) => {
+  // 根据节点type绘制各个模块
+  paintGraph = (snap, node, isRemove) => {
     const nodeMapFn = {
       [TYPES.active]: Activity,
       [TYPES.page]: Page,
@@ -59,8 +60,10 @@ class Visual extends Component {
     const right = [cx + width / 2, cy];
     const bottom = [cx, cy + height / 2];
     const left = [cx - width / 2, cy];
+    isRemove && graph.remove();
     return { top, right, bottom, left };
   };
+  // 计算各个节点的位置（即x，y坐标），并将其绘制出来
   addCoordinate = (snap, data, svgWidth, svgHeight) => {
     let x = svgWidth / (data.length + 1);
     for (let i = 0; i < data.length; i++) {
@@ -72,23 +75,31 @@ class Visual extends Component {
         const currentY = y + COLUMN_SPACING * j;
         tmp.x = currentX;
         tmp.y = currentY;
-        tmp.lineCoordinate = this.paintGraph(snap, tmp);
+        // 计算模块的边界坐标
+        tmp.lineCoordinate = this.paintGraph(snap, tmp, true);
       }
     }
+    // 先画线
     this.paintLine(snap, data);
+    // 再画模块
+    flat(data).forEach(node => {
+      this.paintGraph(snap, node, false);
+    });
   };
+  // 循环处理各个模块，找出上下对应关系
   paintLine = (snap, data) => {
     const flatData = flat(data);
     flatData.forEach((node, index, arr) => {
       const ids = node.children.reduce((acc, cur) => acc.concat(cur.sid), []);
       const children = arr.filter(i => ids.includes(i.id));
       children.forEach(j => {
+        // 找到父节点与子节点的关系节点
         const relationObj = node.children.find(i => i.sid === j.id);
         this.lineArrow(snap, node, j, relationObj);
       });
     });
   };
-
+  // 绘制连线
   lineArrow = (snap, parent, child, relationObj) => {
     if (parent.x && parent.y && child.x && child.y) {
       const right = parent.lineCoordinate.right;
@@ -96,11 +107,11 @@ class Visual extends Component {
       const styleParams = {
         strokeDasharray: 5
       };
-
+      // relation 1表示串行，2表示并行
       ArrowLine(
         snap,
         { x1: right[0], y1: right[1], x2: left[0], y2: left[1] },
-        +relationObj.relation === 0 ? {} : styleParams
+        +relationObj.relation === 1 ? {} : styleParams
       );
     }
   };

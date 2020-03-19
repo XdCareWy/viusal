@@ -23,11 +23,11 @@ export const COLOR = {
 };
 export const ELLIPSE_RX = 40;
 export const ELLIPSE_RY = 20;
-export const CIRCLE_R = 30;
+export const CIRCLE_R = 35;
 export const RECTANGLE_WIDTH = 80;
 export const RECTANGLE_HEIGHT = 40;
 export const SQUARE_WIDTH = 50;
-export const FONTSIZE = "10px";
+export const FONTSIZE = "12px";
 export const TYPES = {
   active: 0,
   cache: 1,
