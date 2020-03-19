@@ -23,6 +23,8 @@
  * @returns {*}
  */
 export function groupData(sourceData) {
+  // 将接口返回的数据转换成我需要的数据
+  sourceData = transformData(sourceData);
   let result;
   const rootNode = getRootNode(sourceData);
   const rootChildren = rootNode.children.reduce((acc, cur) => {
@@ -86,4 +88,15 @@ function filterMiddleNode(nodes) {
     );
   }
   return res.reverse();
+}
+
+function transformData(data) {
+  return data.map(item => {
+    const { parents, children, current } = item;
+    return {
+      parents,
+      children,
+      ...current
+    };
+  });
 }

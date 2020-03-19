@@ -22,8 +22,9 @@ class Visual extends Component {
     };
   }
   componentDidMount() {
+    const { value } = this.props;
     const snap = Snap("#svgId");
-    const { data, maxWidth, maxHeight } = groupData(mockData);
+    const { data, maxWidth, maxHeight } = groupData(value);
     const svgWidth = (maxWidth + 1) * ROW_SPACING;
     const svgHeight = (maxHeight + 1) * COLUMN_SPACING;
     this.addCoordinate(snap, data, svgWidth, svgHeight);
@@ -42,8 +43,17 @@ class Visual extends Component {
       [TYPES.cache]: Cache,
       [TYPES.mq]: MQ
     };
-    const fn = nodeMapFn[node.type];
-    const graph = fn(snap, node.x, node.y, node.pointName);
+    const fn = nodeMapFn[node.serviceType];
+    const graph = fn(snap, node.x, node.y, node.serviceName);
+    graph.hover(
+      e => {
+        console.log(e.target.attributes);
+        console.log("aaa");
+      },
+      () => {
+        console.log("bbbbb");
+      }
+    );
     const { cx, cy, width, height } = graph.getBBox();
     const top = [cx, cy - height / 2];
     const right = [cx + width / 2, cy];
@@ -82,6 +92,8 @@ class Visual extends Component {
     if (parent.x && parent.y && child.x && child.y) {
       const right = parent.lineCoordinate.right;
       const left = child.lineCoordinate.left;
+      console.log(parent)
+      console.log(child)
       ArrowLine(snap, { x1: right[0], y1: right[1], x2: left[0], y2: left[1] });
     }
   };
