@@ -5,10 +5,12 @@ export function Rectangle(snap, basicParams, styleParams) {
     stroke = "gray",
     strokeWidth = "1",
     fillOpacity = "1",
+    id,
     ...rest
   } = styleParams || {};
   const rectangle = snap.rect(x, y, width, height, rx, ry);
   const attrs = {
+    id: `rectangle_${id}`,
     fill,
     stroke,
     strokeWidth,

@@ -6,6 +6,7 @@ function Circle(snap, basicParams, styleParams = {}) {
     strokeWidth = "1",
     fillOpacity = "1",
     width = "",
+    id,
     ...rest
   } = styleParams;
   const circle = snap.circle(x, y, r);
@@ -15,6 +16,7 @@ function Circle(snap, basicParams, styleParams = {}) {
     strokeWidth,
     fillOpacity,
     width,
+    id: `circle_${id}`,
     strokeDasharray: 0,
     ...rest
   };

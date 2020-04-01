@@ -1,4 +1,8 @@
+html,
+body {
+  background-color: rgb(243, 243, 243);
+}
 text.center {
-    text-anchor: middle;
-    dominant-baseline: middle;
+  text-anchor: middle;
+  dominant-baseline: middle;
 }

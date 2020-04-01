@@ -1,10 +1,11 @@
 import { Ellipse, Text } from "../basicSvg";
 import { ELLIPSE_RX, ELLIPSE_RY } from "../tool/constants";
 
-export default function Activity(snap, x, y, text) {
+export default function Activity(snap, x, y, text, id) {
   const style = {
       fill: Activity.color,
-      strokeWidth: 0
+      strokeWidth: 0,
+      id
     },
     rx = ELLIPSE_RX,
     ry = ELLIPSE_RY;

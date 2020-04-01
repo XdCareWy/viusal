@@ -38,10 +38,14 @@ class TextComponent {
       if (!height) {
         height = lineHeight;
       }
-      if (lineWidth > maxWidth) {
+      if (word === ";" || lineWidth > maxWidth) {
         lineWord.pop();
         result.push(lineWord.join(""));
-        lineWord = [word];
+        if (word !== ";") {
+          lineWord = [word];
+        } else {
+          lineWord = [];
+        }
       }
       word = words.pop();
     }
@@ -51,10 +55,10 @@ class TextComponent {
       lineHeight: height
     };
   }
-  render(text) {
+  render(text, lineHeight) {
     const { x, y, fontSize } = this,
-      { fill = "white", strokeWidth = "1" } = this.restStyle;
-    const textComponent = this.snap.text(x, y, text);
+      { fill = "black", strokeWidth = "1" } = this.restStyle;
+    const textComponent = this.snap.text(x, y + lineHeight, text);
     textComponent.attr({
       fill: fill,
       strokeWidth: strokeWidth,
@@ -67,6 +71,12 @@ class TextComponent {
 
 export default function Text(snap, basic, style) {
   const t = new TextComponent(snap, basic, style);
-  const { lines } = t.splitTextByWidth(t.maxWidth);
-  return t.render(lines[0]);
+  const { lines, lineHeight } = t.splitTextByWidth(t.maxWidth);
+  const g = snap.g();
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const l = t.render(line, lineHeight * (i - Math.floor(lines.length / 2)));
+    g.add(l);
+  }
+  return g;
 }

@@ -1,6 +1,6 @@
 import { Square, Text } from "../basicSvg";
 import { SQUARE_WIDTH } from "../tool/constants";
-export default function Cache(snap, x, y, text) {
+export default function Cache(snap, x, y, text, id) {
   const width = SQUARE_WIDTH,
     basicParams = {
       x: x - width / 2,
@@ -9,7 +9,8 @@ export default function Cache(snap, x, y, text) {
     },
     style = {
       fill: Cache.color,
-      strokeWidth: 0
+      strokeWidth: 0,
+      id
     };
   const cache = Square(snap, basicParams, style);
   text = typeof text === "string" ? text.trim() : "";

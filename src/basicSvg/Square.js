@@ -5,10 +5,12 @@ export function Square(snap, basicParams, styleParams) {
     stroke = "gray",
     strokeWidth = "1",
     fillOpacity = "1",
+    id,
     ...rest
   } = styleParams || {};
   const square = snap.rect(x, y, width, width, rx, ry);
   const attrs = {
+    id: `square_${id}`,
     fill,
     stroke,
     strokeWidth,

@@ -1,6 +1,6 @@
 import { Rectangle, Text } from "../basicSvg";
 import { RECTANGLE_HEIGHT, RECTANGLE_WIDTH } from "../tool/constants";
-export default function Page(snap, x, y, text) {
+export default function Page(snap, x, y, text, id) {
   const width = RECTANGLE_WIDTH,
     height = RECTANGLE_HEIGHT,
     offsetX = x - width / 2,
@@ -13,7 +13,8 @@ export default function Page(snap, x, y, text) {
     };
   const style = {
     fill: Page.color,
-    strokeWidth: 0
+    strokeWidth: 0,
+    id
   };
   const page = Rectangle(snap, basicParams, style);
   text = typeof text === "string" ? text.trim() : "";

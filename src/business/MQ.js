@@ -1,10 +1,11 @@
 import { Circle, Text } from "../basicSvg";
 import { CIRCLE_R } from "../tool/constants";
-export default function MQ(snap, x, y, text) {
+export default function MQ(snap, x, y, text, id) {
   const r = CIRCLE_R,
     style = {
       fill: MQ.color,
-      strokeWidth: 0
+      strokeWidth: 0,
+      id
     };
   const mq = Circle(snap, { x, y, r }, style);
   text = typeof text === "string" ? text.trim() : "";
@@ -18,4 +19,4 @@ export default function MQ(snap, x, y, text) {
   }
   return mq;
 }
-MQ.color = "#4C5155";
+MQ.color = "#BF97BF";

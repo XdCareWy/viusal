@@ -21,12 +21,12 @@ export const COLOR = {
   PAGE_2: "#87706B",
   PAGE_3: "#B3B435"
 };
-export const ELLIPSE_RX = 40;
-export const ELLIPSE_RY = 20;
-export const CIRCLE_R = 35;
-export const RECTANGLE_WIDTH = 80;
-export const RECTANGLE_HEIGHT = 40;
-export const SQUARE_WIDTH = 50;
+export const ELLIPSE_RX = 60;
+export const ELLIPSE_RY = 30;
+export const CIRCLE_R = 45;
+export const RECTANGLE_WIDTH = 100;
+export const RECTANGLE_HEIGHT = 50;
+export const SQUARE_WIDTH = 70;
 export const FONTSIZE = "12px";
 export const TYPES = {
   active: 0,
@@ -37,5 +37,5 @@ export const TYPES = {
   mq: 5,
   page: 6
 };
-export const ROW_SPACING = 160;
-export const COLUMN_SPACING = 140;
+export const ROW_SPACING = 240;
+export const COLUMN_SPACING = 200;
