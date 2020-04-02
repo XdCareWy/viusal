@@ -44,7 +44,7 @@ function ArrowLine(snap, basicParams, styleParams = {}) {
     strokeWidth,
     fillOpacity,
     width,
-    id: `arrowLine_${id}`,
+    id: `line_${id}`,
     markerEnd: markerEnd,
     ...rest
   };

@@ -10,7 +10,7 @@ export function Ellipse(snap, basicParams, styleParams) {
   } = styleParams || {};
   const ellipse = snap.ellipse(x, y, rx, ry);
   const attrs = {
-    id: `ellipse_${id}`,
+    id: `module_${id}`,
     fill,
     stroke,
     strokeWidth,

@@ -16,7 +16,7 @@ function Circle(snap, basicParams, styleParams = {}) {
     strokeWidth,
     fillOpacity,
     width,
-    id: `circle_${id}`,
+    id: `module_${id}`,
     strokeDasharray: 0,
     ...rest
   };

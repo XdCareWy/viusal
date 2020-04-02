@@ -10,7 +10,7 @@ export function Square(snap, basicParams, styleParams) {
   } = styleParams || {};
   const square = snap.rect(x, y, width, width, rx, ry);
   const attrs = {
-    id: `square_${id}`,
+    id: `module_${id}`,
     fill,
     stroke,
     strokeWidth,

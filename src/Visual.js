@@ -14,6 +14,8 @@ import { ROW_SPACING, COLUMN_SPACING, TYPES } from "./tool/constants";
 import { ArrowLine } from "./basicSvg";
 import SliderBar from "./components/SliderBar";
 
+const errorId = [];
+
 class Visual extends Component {
   constructor(props) {
     super(props);
@@ -30,11 +32,81 @@ class Visual extends Component {
     const svgWidth = (maxWidth + 1) * ROW_SPACING;
     const svgHeight = (maxHeight + 1) * COLUMN_SPACING;
     this.addCoordinate(snap, data, svgWidth, svgHeight);
+
+    this.renderError(snap, data, errorId);
     this.setState({
       width: svgWidth,
       height: svgHeight
     });
   }
+  renderError = (snap, data, errorId) => {
+    const flatData = flat(data);
+    console.log(flatData);
+    let allErrorIds = errorId;
+    // 1. 知道当前异常的节点
+    for (let id of errorId) {
+      const r = loop(flatData, id);
+      console.log(r);
+      allErrorIds = [...allErrorIds, ...r];
+    }
+    console.log([...new Set(allErrorIds)]);
+    // 递归找到所有的父节点
+    function loop(sourceData, id) {
+      let parentIdsRes = [];
+      // 1. 找到当前的节点
+      const currentNode = flatData.find(item => item.id === id);
+      // 2. 找到当前节点的父节点id
+      const parentIds = currentNode.parents.reduce(
+        (acc, cur) => acc.concat(cur.fid),
+        []
+      );
+      // 2.1 存储线段的id
+      parentIds.forEach(parentId => {
+        parentIdsRes.push(`line_${parentId}_${id}`);
+      });
+      // 3. 如果父节点ids不为空，循环调用
+      if (parentIds.length) {
+        for (let i = 0; i < parentIds.length; i++) {
+          // 递归前，先判断该id是否已经递归过了，如果递归过了，就不再进行递归
+          if (!parentIdsRes.includes(parentIds[i])) {
+            const loopRes = loop(sourceData, parentIds[i]);
+            parentIdsRes = [...parentIds, ...loopRes, ...parentIdsRes];
+          }
+        }
+        return parentIdsRes;
+      }
+      return parentIdsRes;
+    }
+
+    [...new Set(allErrorIds)].forEach(item => {
+      if (typeof item === "string") {
+        console.log(item);
+        snap.select(`#${item}`).attr({
+          stroke: "red"
+        });
+      } else {
+        snap.select(`#module_${item}`).attr({
+          fill: "red"
+        });
+      }
+    });
+  };
+
+  highlightNode = (node) => {
+    const lines = [];
+    const parentIds = node.parents.reduce(
+        (acc, cur) => acc.concat(cur.fid),
+        []
+    );
+    const childrenIds = node.children.reduce(
+        (acc, cur) => acc.concat(cur.sid),
+        []
+    );
+    parentIds.forEach(i => lines.push(`line_${i}_${node.id}`));
+    childrenIds.forEach(i => lines.push(`line_${node.id}_${i}`));
+    return [...lines, ...[...parentIds, ...childrenIds, node.id].map(i => `module_${i}`)]
+  };
+
   // 根据节点type绘制各个模块
   paintGraph = (snap, node, isRemove) => {
     const nodeMapFn = {
@@ -50,11 +122,13 @@ class Visual extends Component {
     const graph = fn(snap, node.x, node.y, node.serviceName, node.id);
     graph.hover(
       e => {
-        // console.log(e.target.attributes);
-        // console.log("aaa");
+        const allElements = this.highlightNode(node);
+        console.log(allElements)
+        allElements.forEach(l => snap.select(`#${l}`).attr({class: 'module-red'}))
       },
       () => {
-        // console.log("bbbbb");
+        const allElements = this.highlightNode(node);
+        allElements.forEach(l => snap.select(`#${l}`).attr({class: ''}))
       }
     );
     const { cx, cy, width, height } = graph.getBBox();
@@ -62,7 +136,9 @@ class Visual extends Component {
     const right = [cx + width / 2, cy];
     const bottom = [cx, cy + height / 2];
     const left = [cx - width / 2, cy];
-    isRemove && graph.remove();
+    if (isRemove) {
+      graph.remove();
+    }
     return { top, right, bottom, left };
   };
   // 计算各个节点的位置（即x，y坐标），并将其绘制出来

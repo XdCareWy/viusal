@@ -10,7 +10,7 @@ export function Rectangle(snap, basicParams, styleParams) {
   } = styleParams || {};
   const rectangle = snap.rect(x, y, width, height, rx, ry);
   const attrs = {
-    id: `rectangle_${id}`,
+    id: `module_${id}`,
     fill,
     stroke,
     strokeWidth,
