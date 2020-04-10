@@ -14,8 +14,6 @@ import { ROW_SPACING, COLUMN_SPACING, TYPES } from "./tool/constants";
 import { ArrowLine } from "./basicSvg";
 import SliderBar from "./components/SliderBar";
 
-const errorId = [];
-
 class Visual extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +24,7 @@ class Visual extends Component {
     };
   }
   componentDidMount() {
-    const { value } = this.props;
+    const { value, errorId } = this.props;
     const snap = Snap("#svgId");
     const { data, maxWidth, maxHeight } = groupData(value);
     const svgWidth = (maxWidth + 1) * ROW_SPACING;
@@ -86,25 +84,33 @@ class Visual extends Component {
         });
       } else {
         snap.select(`#module_${item}`).attr({
-          fill: "red"
+          fill: "red",
         });
+        if(errorId.includes(item)) {
+          snap.select(`#module_${item}`).attr({
+            class: "breath-effect"
+          });
+        }
       }
     });
   };
 
-  highlightNode = (node) => {
+  highlightNode = node => {
     const lines = [];
     const parentIds = node.parents.reduce(
-        (acc, cur) => acc.concat(cur.fid),
-        []
+      (acc, cur) => acc.concat(cur.fid),
+      []
     );
     const childrenIds = node.children.reduce(
-        (acc, cur) => acc.concat(cur.sid),
-        []
+      (acc, cur) => acc.concat(cur.sid),
+      []
     );
     parentIds.forEach(i => lines.push(`line_${i}_${node.id}`));
     childrenIds.forEach(i => lines.push(`line_${node.id}_${i}`));
-    return [...lines, ...[...parentIds, ...childrenIds, node.id].map(i => `module_${i}`)]
+    return [
+      ...lines,
+      ...[...parentIds, ...childrenIds, node.id].map(i => `module_${i}`)
+    ];
   };
 
   // 根据节点type绘制各个模块
@@ -123,12 +129,13 @@ class Visual extends Component {
     graph.hover(
       e => {
         const allElements = this.highlightNode(node);
-        console.log(allElements)
-        allElements.forEach(l => snap.select(`#${l}`).attr({class: 'module-red'}))
+        allElements.forEach(l => snap.select(`#${l}`).addClass("module-red"));
       },
       () => {
         const allElements = this.highlightNode(node);
-        allElements.forEach(l => snap.select(`#${l}`).attr({class: ''}))
+        allElements.forEach(l =>
+          snap.select(`#${l}`).removeClass("module-red")
+        );
       }
     );
     const { cx, cy, width, height } = graph.getBBox();

@@ -2,21 +2,26 @@ import React, { Component } from "react";
 import { render } from "react-dom";
 import Visual from "./Visual";
 import "./index.css";
-import { getData } from "./api";
+import { getData, getErrorData } from "./api";
 
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      errorId: []
     };
   }
   async componentDidMount() {
     try {
-      const { success, result } = await getData();
-      if (success) {
+      const [first, second] = await Promise.all([
+        getData(),
+        getErrorData({ id: "0607" })
+      ]);
+      if (first.success && second.success) {
         this.setState({
-          data: result.nodes
+          data: first.result.nodes,
+          errorId: second.result.list.map(item => +item)
         });
       }
     } catch (e) {
@@ -25,8 +30,12 @@ class Index extends Component {
   }
 
   render() {
-    const { data } = this.state;
-    return <div>{!!data.length ? <Visual value={data} /> : "数据为空"}</div>;
+    const { data, errorId } = this.state;
+    return (
+      <div>
+        {!!data.length ? <Visual value={data} errorId={errorId} /> : "数据为空"}
+      </div>
+    );
   }
 }
 

@@ -10,3 +10,27 @@ text.center {
   fill: red;
   stroke: red;
 }
+.breath-effect {
+  animation-name: breath; /* 动画名称 */
+  animation-duration: 1s; /* 动画时长3秒 */
+  animation-timing-function: ease-in-out; /* 动画速度曲线：以低速开始和结束 */
+  animation-iteration-count: infinite; /* 播放次数：无限 */
+}
+@keyframes breath {
+  from {
+    fill: red;
+    stroke: red;
+  } /* 动画开始时 */
+  33% {
+    fill: yellowgreen;
+    stroke: yellowgreen;
+  } /* 动画33% 时 */
+  66% {
+    fill: darkred;
+    stroke: darkred;
+  } /* 动画66% 时 */
+  to {
+    fill: red;
+    stroke: red;
+  } /* 动画结束时 */
+}
