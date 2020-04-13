@@ -70,13 +70,25 @@ class TextComponent {
 }
 
 export default function Text(snap, basic, style) {
-  const t = new TextComponent(snap, basic, style);
-  const { lines, lineHeight } = t.splitTextByWidth(t.maxWidth);
+  // 1. new 一个Text对象
+  const textObj = new TextComponent(snap, basic, style);
+  // 2. 根据给定一行的最大宽度来获取绘制文本的行数和一行的高度
+  const { lines, lineHeight } = textObj.splitTextByWidth(textObj.maxWidth);
   const g = snap.g();
+  // 3. 绘制每一行，并将其分到一个组中
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    const l = t.render(line, lineHeight * (i - Math.floor(lines.length / 2)));
-    g.add(l);
+    // 如果是偶数行，y需要往下移动 一行行高的一半，保证绘制的文本处于中间
+    let floatHeight = 0;
+    if (lines.length % 2 === 0) {
+      floatHeight = lineHeight / 2;
+    }
+    // 4. 绘制当前文本
+    const currentLine = textObj.render(
+      line,
+      lineHeight * (i - lines.length / 2) + floatHeight
+    );
+    g.add(currentLine);
   }
   return g;
 }

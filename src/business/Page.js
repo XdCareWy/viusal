@@ -19,11 +19,7 @@ export default function Page(snap, x, y, text, id) {
   const page = Rectangle(snap, basicParams, style);
   text = typeof text === "string" ? text.trim() : "";
   if (text) {
-    const t = Text(
-      snap,
-      { x: x, y: y, text: text },
-      { maxWidth: 2 * (width - 10) }
-    );
+    const t = Text(snap, { x: x, y: y, text: text }, { maxWidth: width - 10 });
     return snap.g(page, t);
   }
   return page;

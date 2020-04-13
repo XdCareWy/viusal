@@ -15,11 +15,7 @@ export default function ES(snap, x, y, text, id) {
   const es = Square(snap, basicParams, style);
   text = typeof text === "string" ? text.trim() : "";
   if (text) {
-    const t = Text(
-      snap,
-      { x: x, y: y, text: text },
-      { maxWidth: 2 * (width - 10) }
-    );
+    const t = Text(snap, { x: x, y: y, text: text }, { maxWidth: width - 10 });
     return snap.g(es, t);
   }
   return es;

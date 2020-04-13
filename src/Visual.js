@@ -84,9 +84,9 @@ class Visual extends Component {
         });
       } else {
         snap.select(`#module_${item}`).attr({
-          fill: "red",
+          fill: "red"
         });
-        if(errorId.includes(item)) {
+        if (errorId.includes(item)) {
           snap.select(`#module_${item}`).attr({
             class: "breath-effect"
           });
@@ -125,9 +125,13 @@ class Visual extends Component {
       [TYPES.mq]: MQ
     };
     const fn = nodeMapFn[node.serviceType];
-    const graph = fn(snap, node.x, node.y, node.serviceName, node.id);
+    const tips = [`服务名称: ${node.serviceName}`];
+    node.count && tips.push(`调用量: ${node.count}`);
+    node.tp99 && tips.push(`tp99: ${node.count}`);
+    node.cpu && tips.push(`cpu: ${node.count}`);
+    const graph = fn(snap, node.x, node.y, tips.join(";"), node.id);
     graph.hover(
-      e => {
+      () => {
         const allElements = this.highlightNode(node);
         allElements.forEach(l => snap.select(`#${l}`).addClass("module-red"));
       },
