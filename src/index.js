@@ -112,7 +112,7 @@ class Index extends Component {
             </div>
           </Visual>
         ) : (
-          "数据为空"
+          "loading...."
         )}
       </div>
     );

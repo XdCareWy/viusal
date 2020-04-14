@@ -266,6 +266,8 @@ class Visual extends Component {
               <ul style={{ marginTop: "10px", marginLeft: "10px" }}>
                 <li>实线： 串行</li>
                 <li>虚线： 并行</li>
+                <li>红色闪烁：异常节点</li>
+                <li>红色：与异常节点相关的节点</li>
               </ul>
             </div>
             <SliderBar value={sliderValue} onChange={this.handleChange} />
