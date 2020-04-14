@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === "development") {
   isDev = false;
   url = "//jupiter.jd.com";
 }
-console.log(isDev); // eslint-disable-line
+// console.log(isDev); // eslint-disable-line
 // url: 线上- ""; 预发：yf_yrl; mock: mock_url;
 axios.defaults.baseURL = url;
 axios.defaults.timeout = 500000;

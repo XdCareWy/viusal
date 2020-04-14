@@ -37,17 +37,32 @@ class Visual extends Component {
       height: svgHeight
     });
   }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const { value, errorId } = this.props;
+    const snap = Snap("#svgId");
+    snap.clear();
+    const { data, maxWidth, maxHeight } = groupData(value);
+    const svgWidth = (maxWidth + 1) * ROW_SPACING;
+    const svgHeight = (maxHeight + 1) * COLUMN_SPACING;
+    this.addCoordinate(snap, data, svgWidth, svgHeight);
+    this.renderError(snap, data, errorId);
+    if (prevState.width !== svgWidth || prevState.height !== svgHeight) {
+      this.setState({
+        width: svgWidth,
+        height: svgHeight
+      });
+    }
+  }
+
   renderError = (snap, data, errorId) => {
     const flatData = flat(data);
-    console.log(flatData);
     let allErrorIds = errorId;
     // 1. 知道当前异常的节点
     for (let id of errorId) {
       const r = loop(flatData, id);
-      console.log(r);
       allErrorIds = [...allErrorIds, ...r];
     }
-    console.log([...new Set(allErrorIds)]);
     // 递归找到所有的父节点
     function loop(sourceData, id) {
       let parentIdsRes = [];
@@ -78,7 +93,6 @@ class Visual extends Component {
 
     [...new Set(allErrorIds)].forEach(item => {
       if (typeof item === "string") {
-        console.log(item);
         snap.select(`#${item}`).attr({
           stroke: "red"
         });
@@ -235,19 +249,27 @@ class Visual extends Component {
           >
             全链路拓扑图
           </h1>
-          <SliderBar value={sliderValue} onChange={this.handleChange} />
           <div
             style={{
               display: "flex",
-              alignItems: "center",
-              marginLeft: "100px"
+              alignItems: "center"
             }}
           >
-            <strong>说明：</strong>
-            <ul style={{ marginTop: "10px", marginLeft: "10px" }}>
-              <li>实线： 串行</li>
-              <li>虚线： 并行</li>
-            </ul>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginLeft: "100px"
+              }}
+            >
+              <strong>说明：</strong>
+              <ul style={{ marginTop: "10px", marginLeft: "10px" }}>
+                <li>实线： 串行</li>
+                <li>虚线： 并行</li>
+              </ul>
+            </div>
+            <SliderBar value={sliderValue} onChange={this.handleChange} />
+            {this.props.children}
           </div>
         </div>
         <div

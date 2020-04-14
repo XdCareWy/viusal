@@ -7,8 +7,8 @@ text.center {
   dominant-baseline: middle;
 }
 .module-red {
-  fill: red;
-  stroke: red;
+  fill: yellow;
+  stroke: yellow;
 }
 .breath-effect {
   animation-name: breath; /* 动画名称 */
@@ -21,11 +21,7 @@ text.center {
     fill: red;
     stroke: red;
   } /* 动画开始时 */
-  33% {
-    fill: yellowgreen;
-    stroke: yellowgreen;
-  } /* 动画33% 时 */
-  66% {
+  50% {
     fill: darkred;
     stroke: darkred;
   } /* 动画66% 时 */
